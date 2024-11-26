@@ -1,5 +1,4 @@
 Rails.application.routes.draw do
-  resources :rols
   resources :usuarios
   get "home/index"
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
@@ -13,6 +12,9 @@ Rails.application.routes.draw do
 
   # Define your application routes here
   resources :productos
+
+  get "registro" => "usuarios#new", as: :registro
+
 
   # Render dynamic PWA files from app/views/pwa/* (remember to link manifest in application.html.erb)
   # get "manifest" => "rails/pwa#manifest", as: :pwa_manifest

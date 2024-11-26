@@ -1,4 +1,4 @@
-<%= form_with(model: usuario) do |form| %>
+<%= form_with(model: usuario, class:"row g-3") do |form|%>
   <% if usuario.errors.any? %>
     <div style="color: red">
       <h2><%= pluralize(usuario.errors.count, "error") %> prohibited this usuario from being saved:</h2>
@@ -10,33 +10,41 @@
       </ul>
     </div>
   <% end %>
+    <div class="d-flex flex-column align-items-center">
+      <div class="form-group text-center w-50">
+        <%= form.label :nombre, style: "display: block",class:"form-label"%>
+        <%= form.text_field :nombre, class:"form-control", placeholder:"Ingrese su nombre", aria_label:"default input example"  %>
+      </div>
 
-  <div>
-    <%= form.label :nombre, style: "display: block" %>
-    <%= form.text_field :nombre %>
-  </div>
+      <div  class="form-group text-center w-50">
+        <%= form.label :email, style: "display: block", class:"form-label" %>
+        <%= form.text_field :email, class:"form-control" %>
+      </div>
 
-  <div>
-    <%= form.label :email, style: "display: block" %>
-    <%= form.text_field :email %>
-  </div>
+      <div  class="form-group text-center w-50">
+        <%= form.label :contraseña, style: "display: block",class:"form-label" %>
+        <%= form.text_field :contrasena,class:"form-control" %>
+        <div class="col-auto">
+          <span id="passwordHelpInline" class="form-text">
+            Debe ser de 8-20 caracteres.
+          </span>
+        </div>
+      </div>
 
-  <div>
-    <%= form.label :telefono, style: "display: block" %>
-    <%= form.text_field :telefono %>
-  </div>
 
-  <div>
-    <%= form.label :rol_id, style: "display: block" %>
-    <%= form.text_field :rol_id %>
-  </div>
+      <div  class="form-group text-center w-50">
+        <%= form.label :telefono, style: "display: block" %>
+        <%= form.text_field :telefono,class:"form-control" %>
+      </div>
 
-  <div>
-    <%= form.label :fecha_ingreso, style: "display: block" %>
-    <%= form.date_field :fecha_ingreso %>
-  </div>
-
-  <div>
-    <%= form.submit %>
-  </div>
+      <div class="form-group text-center w-50">
+        <%= form.label :fecha_ingreso, style: "display: block" %>
+        <%= form.date_field :fecha_ingreso,class:"form-control" %>
+      </div>
+      
+      <br>
+      <div>
+        <%= form.submit %>
+      </div>
+    </div>
 <% end %>

@@ -4,7 +4,7 @@ class CreateUsuarios < ActiveRecord::Migration[8.0]
       t.string :nombre
       t.string :email
       t.decimal :telefono
-      t.references :rol, null: false, foreign_key: true
+      t.string :rol, null: false
       t.date :fecha_ingreso
 
       t.timestamps
