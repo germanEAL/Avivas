@@ -7,10 +7,5 @@
 <div id="usuarios">
   <% @usuarios.each do |usuario| %>
     <%= render usuario %>
-    <p>
-      <%= link_to "Show this usuario", usuario %>
-    </p>
   <% end %>
 </div>
-
-<%= link_to "New usuario", new_usuario_path %>

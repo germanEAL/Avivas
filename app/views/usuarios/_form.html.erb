@@ -18,12 +18,12 @@
 
       <div  class="form-group text-center w-50">
         <%= form.label :email, style: "display: block", class:"form-label" %>
-        <%= form.text_field :email, class:"form-control" %>
+        <%= form.text_field :email, class:"form-control", placeholder: "Ingrese su email" %>
       </div>
 
       <div  class="form-group text-center w-50">
         <%= form.label :contraseña, style: "display: block",class:"form-label" %>
-        <%= form.text_field :contrasena,class:"form-control" %>
+        <%= form.password_field :password,class:"form-control", placeholder: "Ingrese su contraseña" %>
         <div class="col-auto">
           <span id="passwordHelpInline" class="form-text">
             Debe ser de 8-20 caracteres.
@@ -42,9 +42,15 @@
         <%= form.date_field :fecha_ingreso,class:"form-control" %>
       </div>
       
+      <div class="form-group text-center w-50">
+        <%= form.label :rol, style: "display: block" %>
+        <%= form.select :rol,@roles,{include_blank: "Seleccione un rol"},class:"form-control" %>
+      
+
       <br>
-      <div>
-        <%= form.submit %>
+      <div class="form-actions" style="text-align: center;">
+        <%= form.submit "Guardar", class: "btn btn-primary", style: "padding: 10px 20px; background-color: #007bff; color: white; border: none; border-radius: 4px; cursor: pointer;" %>   <%= link_to "Volver", usuarios_path, class: "btn btn-primary", style: "padding: 10px 20px; background-color: #9b9b9b; color: white; border: none; border-radius: 4px; cursor: pointer;" %>
+
       </div>
     </div>
 <% end %>

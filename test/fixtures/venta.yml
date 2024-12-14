@@ -1,0 +1,15 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  fecha: 2024-12-09 19:41:26
+  usuario: one
+  cliente: MyString
+  total: 9.99
+  estado: MyString
+
+two:
+  fecha: 2024-12-09 19:41:26
+  usuario: two
+  cliente: MyString
+  total: 9.99
+  estado: MyString

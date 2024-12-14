@@ -1,16 +1,19 @@
-<p style="color: green"><%= notice %></p>
-
-<% content_for :title, "Productos" %>
-
-<h1>Productos</h1>
-
-<div id="productos">
+<h1>Lista de Productos</h1>
+<% if logged_in? %>
+  <%= link_to 'Agregar Producto', new_producto_path, class: "btn btn-primary" %>
+<%end%>
+<div class="productos-lista">
   <% @productos.each do |producto| %>
-    <%= render producto %>
-    <p>
-      <%= link_to "Show this producto", producto %>
-    </p>
+    <div class="producto-item">
+      <%# Mostrar imagen del producto o un placeholder si no tiene %>
+      <% if producto.imagen.attached? %>
+        <%= image_tag producto.imagen, alt: producto.nombre, class: "producto-imagen" %>
+      <%else%>
+        <%= image_tag "placeholder.png", alt: producto.nombre, class: "producto-imagen" %>
+      <% end %>
+
+      <h2 class="producto-nombre"><%= producto.nombre %></h2>
+      <%= link_to "Ver más", producto_path(producto), class: "btn btn-primary" %>
+    </div>
   <% end %>
 </div>
-
-<%= link_to "New producto", new_producto_path %>

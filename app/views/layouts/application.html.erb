@@ -7,7 +7,7 @@
     <meta name="mobile-web-app-capable" content="yes">
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-GLhlTQ8iRABQf0Rr9f+zW2GGbIDj9M9bFExD4STj0e6h7y5ToHqkg13d9NEbF4Tt" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" crossorigin="anonymous">
 
     <%= yield :head %>
 
@@ -25,5 +25,8 @@
   <body>
       <%= render 'layouts/navbar' %>
     <%= yield %>
+    <%= javascript_include_tag "application", "data-turbo-track": "reload" %>
+    <script type="module" src="application.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
   </body>
 </html>

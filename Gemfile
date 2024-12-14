@@ -63,6 +63,8 @@ group :test do
 end
 
 # gem "devise"
-
-gem "bootstrap"
 gem "sassc-rails"
+gem "bootstrap", "~> 5.3.3"
+
+# bcrypt is a key derivation function for passwords 
+gem 'bcrypt', '~> 3.1.7'

@@ -1,10 +1,22 @@
-<p style="color: green"><%= notice %></p>
+<h1>Detalle del Producto</h1>
 
-<%= render @producto %>
+<div class="producto-detalle">
+  <%# Mostrar imagen del producto o un placeholder si no tiene %>
+  <% if @producto.imagen.attached? %>
+    <%= image_tag @producto.imagen, alt: @producto.nombre, class: "producto-imagen" %>
+  <%else%>
+    <%= image_tag "placeholder.png", alt: @producto.nombre, class: "producto-imagen" %>
+  <% end %>
 
-<div>
-  <%= link_to "Edit this producto", edit_producto_path(@producto) %> |
-  <%= link_to "Back to productos", productos_path %>
+  <h2 class="producto-nombre"><%= @producto.nombre %></h2>
+  <p class="producto-precio">$ <%= number_to_currency(@producto.precio) %></p>
+  <p class="producto-descripcion"><%= @producto.descripcion %></p> 
+  <p class="producto-talle">Talle: <%= @producto.talle %></p>
 
-  <%= button_to "Destroy this producto", @producto, method: :delete %>
 </div>
+
+<%if logged_in? %>
+  <%= link_to "Editar", edit_producto_path(@producto), class: "btn btn-primary" %>
+  <%= link_to "Eliminar", @producto, method: :delete, data: { confirm: "¿Estás seguro que deseas eliminar este producto?" }, class: "btn btn-danger" %>
+<%end%>
+<%= link_to "Volver a la lista de productos", productos_path, class: "btn btn-secondary" %>

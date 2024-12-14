@@ -1,67 +1,69 @@
-<%= form_with(model: producto) do |form| %>
-  <% if producto.errors.any? %>
-    <div style="color: red">
-      <h2><%= pluralize(producto.errors.count, "error") %> prohibited this producto from being saved:</h2>
+<div style="display: flex; justify-content: center; align-items: center; min-height: 100vh; background-color: #f9f9f9;">
+  <div style="max-width: 600px; width: 100%; background: white; padding: 20px; border-radius: 8px; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);">
+    <%= form_with(model: producto, html: { class: "form-group" }) do |form| %>
+      <% if producto.errors.any? %>
+        <div style="color: red; margin-bottom: 15px;">
+          <h2 style="font-size: 16px; color: #b00020;"><%= pluralize(producto.errors.count, "error") %> prohibited this producto from being saved:</h2>
+          <ul style="padding-left: 20px;">
+            <% producto.errors.each do |error| %>
+              <li><%= error.full_message %></li>
+            <% end %>
+          </ul>
+        </div>
+      <% end %>
 
-      <ul>
-        <% producto.errors.each do |error| %>
-          <li><%= error.full_message %></li>
-        <% end %>
-      </ul>
-    </div>
-  <% end %>
+      <div class="form-field" style="margin-bottom: 15px;">
+        <%= form.label :nombre, "Nombre", style: "display: block; font-weight: bold; margin-bottom: 5px;" %>
+        <%= form.text_field :nombre, class: "form-control", style: "width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 4px;" %>
+      </div>
 
-  <div>
-    <%= form.label :nombre, style: "display: block" %>
-    <%= form.text_field :nombre %>
+      <!--Descripcion-->
+      <div class="form-field" style="margin-bottom: 15px;">
+        <%= form.label :descripcion, "Descripción", style: "display: block; font-weight: bold; margin-bottom: 5px;" %>
+        <%= form.text_field :descripcion, class: "form-control", style: "width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 4px;" %>
+      </div>
+
+      <!-- Precio -->
+      <div class="form-field" style="margin-bottom: 15px;">
+        <%= form.label :precio, "Precio", style: "display: block; font-weight: bold; margin-bottom: 5px;" %>
+        <%= form.text_field :precio, class: "form-control", style: "width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 4px;" %>
+      </div>
+
+
+        <!-- Categoría -->
+      <div class="form-field" style="margin-bottom: 15px;">
+        <%= form.label :categoria, "Categoría", style: "display: block; font-weight: bold; margin-bottom: 5px;" %>
+        <%= form.text_field :categoria, class: "form-control", style: "width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 4px;" %>
+      </div>
+
+      <!-- Talle -->
+      <div class="form-field" style="margin-bottom: 15px;">
+        <%= form.label :talle, "Talle", style: "display: block; font-weight: bold; margin-bottom: 5px;" %>
+        <%= form.text_field :talle, class: "form-control", style: "width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 4px;" %>
+      </div>
+
+      <!-- Color -->
+      <div class="form-field" style="margin-bottom: 15px;">
+        <%= form.label :stock, "Stock", style: "display: block; font-weight: bold; margin-bottom: 5px;" %>
+        <%= form.number_field :stock, class: "form-control", style: "width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 4px;" %>
+      </div>
+
+
+      <!-- Imagen -->
+      <div class="form-field" style="margin-bottom: 15px;">
+        <%= form.label :imagen, "Imagen", style: "display: block; font-weight: bold; margin-bottom: 5px;" %>
+        <%= form.file_field :imagen, class: "form-control", style: "width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 4px;" %>
+      </div>
+
+      <div class="form-field" style="margin-bottom: 15px;">
+        <%= form.label :fecha_ingreso, "Fecha de Ingreso", style: "display: block; font-weight: bold; margin-bottom: 5px;" %>
+        <%= form.datetime_field :fecha_ingreso, class: "form-control", style: "width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 4px;" %>
+      </div>
+
+      <div class="form-actions" style="text-align: center;">
+        <%= form.submit "Guardar", class: "btn btn-primary", style: "padding: 10px 20px; background-color: #007bff; color: white; border: none; border-radius: 4px; cursor: pointer;" %>   <%= link_to "Volver", productos_path, class: "btn btn-primary", style: "padding: 10px 20px; background-color: #9b9b9b; color: white; border: none; border-radius: 4px; cursor: pointer;" %>
+
+      </div>
+    <% end %>
   </div>
-
-  <div>
-    <%= form.label :descripcion, style: "display: block" %>
-    <%= form.text_field :descripcion %>
-  </div>
-
-  <div>
-    <%= form.label :precio, style: "display: block" %>
-    <%= form.text_field :precio %>
-  </div>
-
-  <div>
-    <%= form.label :stock, style: "display: block" %>
-    <%= form.number_field :stock %>
-  </div>
-
-  <div>
-    <%= form.label :categoria, style: "display: block" %>
-    <%= form.text_field :categoria %>
-  </div>
-
-  <div>
-    <%= form.label :talle, style: "display: block" %>
-    <%= form.text_field :talle %>
-  </div>
-
-  <div>
-    <%= form.label :color, style: "display: block" %>
-    <%= form.text_field :color %>
-  </div>
-
-  <div>
-    <%= form.label :fecha_ingreso, style: "display: block" %>
-    <%= form.datetime_field :fecha_ingreso %>
-  </div>
-
-  <div>
-    <%= form.label :fecha_modificacion, style: "display: block" %>
-    <%= form.datetime_field :fecha_modificacion %>
-  </div>
-
-  <div>
-    <%= form.label :fecha_baja, style: "display: block" %>
-    <%= form.datetime_field :fecha_baja %>
-  </div>
-
-  <div>
-    <%= form.submit %>
-  </div>
-<% end %>
+</div>

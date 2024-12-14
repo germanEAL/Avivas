@@ -3,9 +3,18 @@ class ProductosController < ApplicationController
 
   # GET /productos or /productos.json
   def index
-    @productos = Producto.all
+    if params[:categoria].present?
+      @categoria = params[:categoria]
+      @productos = Producto.where(categoria: params[:categoria])
+    else
+      @productos = Producto.all
+    end 
   end
 
+  def precio 
+    @producto = Producto.find(params[:id])
+    render json: {precio: @producto.precio}
+  end
   # GET /productos/1 or /productos/1.json
   def show
   end
@@ -57,6 +66,7 @@ class ProductosController < ApplicationController
     end
   end
 
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_producto
@@ -65,6 +75,6 @@ class ProductosController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def producto_params
-      params.expect(producto: [ :nombre, :descripcion, :precio, :stock, :categoria, :talle, :color, :fecha_ingreso, :fecha_modificacion, :fecha_baja ])
+      params.expect(producto: [ :nombre, :descripcion, :precio, :stock, :categoria, :talle, :color,:imagen, :fecha_ingreso, :fecha_modificacion, :fecha_baja ])
     end
 end

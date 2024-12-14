@@ -1,22 +1,16 @@
-<table>
-  <tr>
-    <th>Nombre</th>
-    <th>Descripcion</th>
-    <th>Precio</th>
-    <th>Stock</th>
-    <th>Categoria</th>
-    <th>Talle</th>
-    <th>Color</th>
-  </tr>
-  <tr>
-    <td><%= producto.nombre %></td>
-    <td><%= producto.descripcion %></td>
+<div class="producto-container">
+  <%# Mostrar imagen del producto o un placeholder si no tiene %>
+  <% if producto.imagen.attached? %>
+    <%= image_tag producto.imagen, alt: producto.nombre, class: "producto-imagen" %>
+  <% end %>
 
-    <td><%= producto.precio %></td>
-    <td><%= producto.stock %></td>
-    <td><%= producto.categoria %></td>
-    <td><%= producto.talle %></td>
-    <td><%= producto.color %></td>
-  </tr>
-</table>
-
+  <div class="producto-detalles">
+    <h2 class="producto-nombre"><%= producto.nombre %></h2>
+    <p class="producto-precio">$ <%= number_to_currency(producto.precio) %></p>
+    <% if context == :index %>
+      <%= link_to "Ver más", producto_path(producto), class: "btn btn-primary" %>
+    <% elsif context == :show %>
+      <p class="producto-descripcion"><%= producto.descripcion %></p>
+    <% end %>
+  </div>
+</div>

@@ -13,6 +13,11 @@ class UsuariosController < ApplicationController
   # GET /usuarios/new
   def new
     @usuario = Usuario.new
+    @roles = if current_user.admin?
+              ["Administrador", "Gerente", "Empleado"]
+            else
+              [ "Gerente", "Empleado"]
+    end
   end
 
   # GET /usuarios/1/edit
@@ -65,6 +70,6 @@ class UsuariosController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def usuario_params
-      params.expect(usuario: [ :nombre, :email, :telefono, :rol_id, :fecha_ingreso ])
+      params.expect(usuario: [ :nombre, :email, :password, :password_confirmation, :telefono, :rol_id, :fecha_ingreso ])
     end
 end

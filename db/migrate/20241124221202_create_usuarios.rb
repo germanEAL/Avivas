@@ -3,7 +3,7 @@ class CreateUsuarios < ActiveRecord::Migration[8.0]
     create_table :usuarios do |t|
       t.string :nombre
       t.string :email
-      t.decimal :telefono
+      t.integer :telefono
       t.string :rol, null: false
       t.date :fecha_ingreso
 

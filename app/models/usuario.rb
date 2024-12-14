@@ -1,19 +1,22 @@
 class Usuario < ApplicationRecord
+
+  has_many :ventas 
+  has_secure_password
   Roles= [:admin, :user, :gerente, :empleado]
 
   def admin?
-    self.role == 'admin'
+    self.rol == 'admin'
   end
 
   def user?
-    self.role == 'user'
+    self.rol == 'user'
   end 
 
   def gerente?
-    self.role == 'gerente'
+    self.rol == 'gerente'
   end
 
   def empleado?
-    self.role == 'empleado'
+    self.rol == 'empleado'
   end
 end

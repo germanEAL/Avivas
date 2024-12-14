@@ -1,28 +1,19 @@
-<div id="<%= dom_id usuario %>">
-  <p>
-    <strong>Nombre:</strong>
-    <%= usuario.nombre %>
-  </p>
+<table class="table table-striped bg-light rounded shadow-lg">
+  <thead>
+    <tr>
+      <th><strong>Nombre</strong></th>
+      <th><strong>Email</strong></th>
+      <th><strong>Teléfono</strong></th>
+      <th><strong>Fecha de Ingreso</strong></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><%= usuario.nombre %></td>
+      <td><%= usuario.email %></td>
+      <td><%= usuario.telefono %></td>
+      <td><%= usuario.fecha_ingreso.strftime('%d/%m/%Y') %></td>
+    </tr>
+  </tbody>
+</table>
 
-  <p>
-    <strong>Email:</strong>
-    <%= usuario.email %>
-  </p>
-
-  <p> 
-    <strong>Contraseña:</strong>
-    <%= usuario.contrasena%>
-
-  </p>
-
-  <p>
-    <strong>Telefono:</strong>
-    <%= usuario.telefono %>
-  </p>
-
-  <p>
-    <strong>Fecha ingreso:</strong>
-    <%= usuario.fecha_ingreso %>
-  </p>
-
-</div>
