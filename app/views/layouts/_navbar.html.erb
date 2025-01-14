@@ -18,6 +18,11 @@
       <li class="nav-item">
         <%= link_to 'Accesorios',productos_path(categoria: "Accesorios"), class:"nav-link" %>
          </li>
+      <% if logged_in? %>
+        <li class="nav-item">
+          <%= link_to 'Venta',"#", class:"nav-link" %>
+        </li>
+      <% end %>
     <div class="mx-auto">
       <form class="d-flex" role="search">
         <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
