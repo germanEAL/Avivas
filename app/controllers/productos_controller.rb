@@ -1,5 +1,5 @@
 class ProductosController < ApplicationController
-  before_action :set_producto, only: %i[ show edit update destroy ]
+  before_action :set_producto, only: [ :show,:edit,:update, :destroy ]
 
   # GET /productos or /productos.json
   def index
@@ -66,11 +66,20 @@ class ProductosController < ApplicationController
     end
   end
 
+  def buscar
+    @query = params[:busqueda]
+    if @query.present?
+      @productos = Producto.where("nombre LIKE ? OR descripcion LIKE ?", "%#{@query}%", "%#{@query}%")
+    else
+      @productos = Producto.all
+    end
+  end
+
 
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_producto
-      @producto = Producto.find(params.expect(:id))
+      @producto = Producto.find(params[:id])
     end
 
     # Only allow a list of trusted parameters through.

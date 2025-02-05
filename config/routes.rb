@@ -31,10 +31,15 @@ Rails.application.routes.draw do
     end
   end
 
+  resources :productos do
+    collection do
+      get :buscar
+    end
+  end
 
   get '/productos/:id/precio', to: 'productos#precio'
 
-  resources :ventas
+  resources :ventas, only: [:index, :show, :destroy]
   # Render dynamic PWA files from app/views/pwa/* (remember to link manifest in application.html.erb)
   # get "manifest" => "rails/pwa#manifest", as: :pwa_manifest
   # get "service-worker" => "rails/pwa#service_worker", as: :pwa_service_worker

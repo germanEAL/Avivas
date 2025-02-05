@@ -30,11 +30,16 @@
       </div>
 
 
-        <!-- Categoría -->
+      <!-- Categoría -->
       <div class="form-field" style="margin-bottom: 15px;">
         <%= form.label :categoria, "Categoría", style: "display: block; font-weight: bold; margin-bottom: 5px;" %>
-        <%= form.text_field :categoria, class: "form-control", style: "width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 4px;" %>
+        <%= form.select :categoria, 
+                        options_for_select([["Ropa", "Ropa"], ["Accesorios", "Accesorios"], ["Calzado", "Calzado"]]), 
+                        { include_blank: "Seleccione una categoría" }, 
+                        class: "form-control", 
+                        style: "width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 4px;" %>
       </div>
+
 
       <!-- Talle -->
       <div class="form-field" style="margin-bottom: 15px;">

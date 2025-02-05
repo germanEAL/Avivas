@@ -1,0 +1,167 @@
+<div class="container mt-4">
+  <h1 class="mb-3"><%= @venta ? '📝 Editar Venta' : '🛒 Nueva Venta' %></h1>
+
+  <!-- Selector de productos -->
+  <div class="mb-3">
+    <label for="producto_id" class="form-label">Seleccionar Producto</label>
+    <select id="producto_id" class="form-control">
+      <option value="">Seleccione un producto</option>
+      <% @productos.each do |producto| %>
+        <option value="<%= producto.id %>" data-precio="<%= producto.precio %>">
+          <%= producto.nombre %> ($<%= producto.precio %>)
+        </option>
+      <% end %>
+    </select>
+    <input type="number" id="cantidad" class="form-control mt-2" min="1" placeholder="Cantidad" />
+    <button id="add-to-cart" class="btn btn-primary mt-2">Agregar al Carrito</button>
+  </div>
+
+  <!-- Nombre del cliente -->
+  <div class="mb-3">
+    <label for="cliente" class="form-label">Nombre del Cliente</label>
+    <input type="text" id="cliente" class="form-control" placeholder="Ingrese nombre"
+      value="<%= @venta&.cliente %>" />
+  </div>
+
+  <!-- Tabla del carrito -->
+  <h2 class="mt-4">🛍️ Productos en el carrito</h2>
+  <table class="table table-bordered" id="carrito-table">
+    <thead>
+      <tr>
+        <th>Producto</th>
+        <th>Cantidad</th>
+        <th>Precio Unitario</th>
+        <th>Total</th>
+        <th>Acciones</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% if @venta %>
+        <% @venta.venta_productos.each do |vp| %>
+          <tr data-id="<%= vp.producto.id %>">
+            <td><%= vp.producto.nombre %></td>
+            <td><%= vp.cantidad %></td>
+            <td>$<%= vp.producto.precio %></td>
+            <td>$<%= vp.cantidad * vp.producto.precio %></td>
+            <td><button class="btn btn-danger btn-sm remove-item">🗑️</button></td>
+          </tr>
+        <% end %>
+      <% end %>
+    </tbody>
+  </table>
+
+  <!-- Total de la compra -->
+  <h3 class="mt-3">Total: $<span id="total-compra">0</span></h3>
+
+  <!-- Botón para guardar la venta -->
+  <button id="save-sale" class="btn btn-success mt-3">
+    <%= @venta ? '💾 Guardar Cambios' : '✅ Confirmar Venta' %>
+  </button>
+</div>
+
+<script>
+  document.addEventListener("DOMContentLoaded", () => {
+    let carrito = [];
+
+    // Cargar productos existentes en caso de edición
+    <% if @venta %>
+      carrito = <%= @venta.venta_productos.map { |vp| 
+        { id: vp.producto.id, nombre: vp.producto.nombre, cantidad: vp.cantidad, precio: vp.producto.precio, total: vp.cantidad * vp.producto.precio }
+      }.to_json.html_safe %>;
+    <% end %>
+
+    const carritoTableBody = document.querySelector("#carrito-table tbody");
+    const totalCompraSpan = document.getElementById("total-compra");
+
+    function actualizarCarrito() {
+      carritoTableBody.innerHTML = "";
+      let total = 0;
+
+      carrito.forEach((item, index) => {
+        const row = document.createElement("tr");
+        row.innerHTML = `
+          <td>${item.nombre}</td>
+          <td>${item.cantidad}</td>
+          <td>$${item.precio}</td>
+          <td>$${item.total}</td>
+          <td>
+            <button class="btn btn-danger btn-sm remove-item" data-index="${index}">🗑️</button>
+          </td>
+        `;
+        total += item.total;
+        carritoTableBody.appendChild(row);
+      });
+
+      totalCompraSpan.textContent = total;
+    }
+
+    actualizarCarrito();
+
+    document.getElementById("add-to-cart").addEventListener("click", () => {
+      const productoSelect = document.getElementById("producto_id");
+      const cantidadInput = document.getElementById("cantidad");
+
+      const productoId = parseInt(productoSelect.value);
+      const productoNombre = productoSelect.options[productoSelect.selectedIndex].text.split(" ($")[0];
+      const precio = parseFloat(productoSelect.options[productoSelect.selectedIndex].dataset.precio);
+      const cantidad = parseInt(cantidadInput.value);
+
+      if (!productoId || isNaN(cantidad) || cantidad <= 0) {
+        alert("Seleccione un producto y una cantidad válida.");
+        return;
+      }
+
+      const productoEnCarrito = carrito.find(item => item.id === productoId);
+      if (productoEnCarrito) {
+        productoEnCarrito.cantidad += cantidad;
+        productoEnCarrito.total = productoEnCarrito.cantidad * productoEnCarrito.precio;
+      } else {
+        carrito.push({ id: productoId, nombre: productoNombre, cantidad, precio, total: cantidad * precio });
+      }
+
+      actualizarCarrito();
+    });
+
+    carritoTableBody.addEventListener("click", (event) => {
+      if (event.target.classList.contains("remove-item")) {
+        const index = parseInt(event.target.getAttribute("data-index"));
+        carrito.splice(index, 1);
+        actualizarCarrito();
+      }
+    });
+
+    document.getElementById("save-sale").addEventListener("click", () => {
+      if (carrito.length === 0) {
+        alert("El carrito está vacío.");
+        return;
+      }
+
+      const clienteNombre = document.getElementById("cliente").value;
+      if (!clienteNombre) {
+        alert("Ingrese el nombre del cliente.");
+        return;
+      }
+
+      const productos = carrito.map(item => ({ id: item.id, cantidad: item.cantidad }));
+
+      const ventaId = "<%= @venta ? @venta.id : '' %>";
+      const url = ventaId ? `/ventas/${ventaId}` : "/ventas";
+      const method = ventaId ? "PATCH" : "POST";
+
+      fetch(url, {
+        method: method,
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ cliente: clienteNombre, productos })
+      })
+      .then(response => response.ok ? response.json() : Promise.reject(response.statusText))
+      .then(() => {
+        alert("Venta guardada con éxito.");
+        window.location.href = "/ventas";
+      })
+      .catch(error => {
+        console.error("Error:", error);
+        alert("Ocurrió un error al guardar la venta.");
+      });
+    });
+  });
+</script>

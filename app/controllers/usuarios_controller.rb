@@ -1,5 +1,6 @@
 class UsuariosController < ApplicationController
   before_action :set_usuario, only: %i[ show edit update destroy ]
+  before_action :usuario_autorizado!
 
   # GET /usuarios or /usuarios.json
   def index
@@ -59,6 +60,13 @@ class UsuariosController < ApplicationController
     respond_to do |format|
       format.html { redirect_to usuarios_path, status: :see_other, notice: "Usuario was successfully destroyed." }
       format.json { head :no_content }
+    end
+  end
+
+  def usuario_autorizado
+    unless current_user.admin? || current_user.gerente?
+      flash[:danger] = "No tienes permisos para realizar esta acción"
+      redirect_to root_path
     end
   end
 

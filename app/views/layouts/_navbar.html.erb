@@ -1,59 +1,66 @@
 <nav class="navbar navbar-expand-lg bg-body-tertiary">
-<div class="container-fluid">
-  <%= link_to 'Avivas', root_path, class:"navbar-brand"%>
-  <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-    <span class="navbar-toggler-icon"></span>
-  </button>
-  <div class="collapse navbar-collapse" id="navbarSupportedContent">
-    <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-      <li class="nav-item">
-        <%= link_to 'Productos', productos_path, method: :get, class: "nav-link"%>
-      </li>
-      <li class="nav-item">
-        <%= link_to 'Calzado',productos_path(categoria: "Calzado"), class:"nav-link" %> 
-      </li>
-      <li class="nav-item">
-        <%= link_to 'Ropa',productos_path(categoria: "Ropa"), class:"nav-link" %> 
-        </li>
-      <li class="nav-item">
-        <%= link_to 'Accesorios',productos_path(categoria: "Accesorios"), class:"nav-link" %>
-         </li>
-      <% if logged_in? %>
+  <div class="container-fluid">
+    <%= link_to 'Avivas', root_path, class: "navbar-brand" %>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <!-- Left Side (Categories) -->
+      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
         <li class="nav-item">
-          <%= link_to 'Venta',"#", class:"nav-link" %>
+          <%= link_to 'Productos', productos_path, method: :get, class: "nav-link" %>
         </li>
-      <% end %>
-    <div class="mx-auto">
-      <form class="d-flex" role="search">
-        <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-        <button class="btn btn-outline-success" type="submit">Search</button>
-      </form>
-    </div>
-    <div>
-    <ul class="navbar-nav ms-auto">
-    <li class="nav-item dropdown">
-        <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-          Perfil
-        </a>
-      <ul class="dropdown-menu dropdown-menu-end">
-        <%if logged_in? && (current_user.admin? || current_user.gerente?)%>
-        <li >
-          <%= link_to 'Agregar usuario', new_usuario_path, method: :post ,class:"dropdown-item"%>
+        <li class="nav-item">
+          <%= link_to 'Calzado', productos_path(categoria: "Calzado"), class: "nav-link" %>
         </li>
-        <li>
-          <%= link_to 'Listar usuarios', usuarios_path, method: :get ,class:"dropdown-item"%>
-        <%end%>
-        <li>
-          <% if logged_in? %>
-            <%= link_to 'Cerrar Sesion', logout_path, method: :delete ,class:"dropdown-item"%>
-          <% else %>
-             <%= link_to 'Iniciar Sesion', login_path, method: :post ,class:"dropdown-item"%>
-          <% end %>
+        <li class="nav-item">
+          <%= link_to 'Ropa', productos_path(categoria: "Ropa"), class: "nav-link" %>
+        </li>
+        <li class="nav-item">
+          <%= link_to 'Accesorios', productos_path(categoria: "Accesorios"), class: "nav-link" %>
+        </li>
+        <% if logged_in? %>
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+              Ventas
+            </a>
+            <ul class="dropdown-menu">
+              <li>
+                <%= link_to 'Listar ventas', ventas_path, method: :get, class: "dropdown-item" %>
+              </li>
+              <li>
+                <%= link_to 'Agregar venta', new_venta_path, method: :get, class: "dropdown-item" %>
+              </li>
+            </ul>
+          </li>
+        <% end %>
+      </ul>
+      
+      <!-- Right Side (Profile) -->
+      <ul class="navbar-nav ms-auto">
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+            Perfil
+          </a>
+          <ul class="dropdown-menu dropdown-menu-end">
+            <% if logged_in? && (current_user.admin? || current_user.gerente?) %>
+              <li>
+                <%= link_to 'Agregar usuario', new_usuario_path, method: :get, class: "dropdown-item" %>
+              </li>
+              <li>
+                <%= link_to 'Listar usuarios', usuarios_path, method: :get, class: "dropdown-item" %>
+              </li>
+            <% end %>
+            <li>
+              <% if logged_in? %>
+                <%= link_to 'Cerrar Sesión', logout_path, method: :delete, class: "dropdown-item" %>
+              <% else %>
+                <%= link_to 'Iniciar Sesión', login_path, method: :get, class: "dropdown-item" %>
+              <% end %>
+            </li>
+          </ul>
         </li>
       </ul>
-    </li>
-    </ul>
     </div>
   </div>
-</div>
 </nav>

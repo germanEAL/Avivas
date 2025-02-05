@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2024_12_13_115243) do
+ActiveRecord::Schema[8.0].define(version: 2025_02_02_195039) do
   create_table "active_storage_attachments", force: :cascade do |t|
     t.string "name", null: false
     t.string "record_type", null: false
@@ -86,6 +86,7 @@ ActiveRecord::Schema[8.0].define(version: 2024_12_13_115243) do
     t.decimal "total"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.decimal "precio"
     t.index ["producto_id"], name: "index_venta_productos_on_producto_id"
     t.index ["venta_id"], name: "index_venta_productos_on_venta_id"
   end
@@ -104,7 +105,7 @@ ActiveRecord::Schema[8.0].define(version: 2024_12_13_115243) do
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
   add_foreign_key "venta", "usuarios"
-  add_foreign_key "venta_productos", "productos"
-  add_foreign_key "venta_productos", "venta"
+  add_foreign_key "venta_productos", "productos", on_delete: :cascade
+  add_foreign_key "venta_productos", "ventas"
   add_foreign_key "ventas", "usuarios"
 end

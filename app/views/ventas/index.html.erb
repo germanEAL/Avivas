@@ -1,0 +1,32 @@
+<h1 class="mb-4">📊 Ventas Registradas</h1>
+
+<a href="/ventas/new" class="btn btn-primary mb-3">➕ Nueva Venta</a>
+
+<table class="table table-striped table-bordered">
+  <thead class="table-dark">
+    <tr>
+      <th>Empleado</th>
+      <th>Fecha</th>
+      <th>Estado</th>
+      <th>Acciones</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @ventas.each do |venta| %>
+      <tr>
+        <td>
+          <% if venta.usuario.rol == "Gerente" %>
+            <span class="badge bg-success">👔 <%= venta.usuario.rol %></span>
+          <% else %>
+            <span class="badge bg-info">🛠 <%= venta.usuario.rol %></span>
+          <% end %>
+        </td>
+        <td><%= venta.fecha.strftime("%Y-%m-%d %H:%M:%S") %></td>
+        <td> <%= venta.estado.capitalize %></td>
+        <td>
+          <a href="<%= venta_path(venta) %>" class="btn btn-sm btn-info">👁️ Ver</a>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
